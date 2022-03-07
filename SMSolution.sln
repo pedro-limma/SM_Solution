@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Ports", "1 - Ports", "{448A5A42-DA30-40CC-B008-CD7A96C86AF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{952E11B6-30B8-4423-A562-BB072E7CCD84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Adapters", "3 - Adapters", "{C877007A-F497-4F54-A4F0-85F293452B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.API", "src\SMSolution.API\SMSolution.API.csproj", "{BF901389-D523-42E3-8CF1-0EDF83263245}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{96F7AB32-5431-434B-918B-2489E719368C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D2DA3BA0-9027-4339-8C66-5D40CDE2B5D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.Domain.Application", "src\SMSolution.Domain.Application\SMSolution.Domain.Application.csproj", "{37BF5C32-9735-446A-B9F0-69759B393768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.Domain.Core", "src\SMSolution.Domain.Core\SMSolution.Domain.Core.csproj", "{8F1E140D-8E32-4EEB-A291-7E98E550C84B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF901389-D523-42E3-8CF1-0EDF83263245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF901389-D523-42E3-8CF1-0EDF83263245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF901389-D523-42E3-8CF1-0EDF83263245}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF901389-D523-42E3-8CF1-0EDF83263245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37BF5C32-9735-446A-B9F0-69759B393768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37BF5C32-9735-446A-B9F0-69759B393768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37BF5C32-9735-446A-B9F0-69759B393768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37BF5C32-9735-446A-B9F0-69759B393768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F1E140D-8E32-4EEB-A291-7E98E550C84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F1E140D-8E32-4EEB-A291-7E98E550C84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F1E140D-8E32-4EEB-A291-7E98E550C84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F1E140D-8E32-4EEB-A291-7E98E550C84B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BF901389-D523-42E3-8CF1-0EDF83263245} = {448A5A42-DA30-40CC-B008-CD7A96C86AF4}
+		{96F7AB32-5431-434B-918B-2489E719368C} = {952E11B6-30B8-4423-A562-BB072E7CCD84}
+		{D2DA3BA0-9027-4339-8C66-5D40CDE2B5D5} = {952E11B6-30B8-4423-A562-BB072E7CCD84}
+		{37BF5C32-9735-446A-B9F0-69759B393768} = {96F7AB32-5431-434B-918B-2489E719368C}
+		{8F1E140D-8E32-4EEB-A291-7E98E550C84B} = {D2DA3BA0-9027-4339-8C66-5D40CDE2B5D5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6AA024C-BCEB-445C-89C8-4D3221514725}
+	EndGlobalSection
+EndGlobal
