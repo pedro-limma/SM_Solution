@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SMSolution.Adapters.MongoDB.ConnectionFactory;
+using SMSolution.Adapters.MongoDB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,14 @@ namespace SMSolution.API
         {
 
             services.AddControllers();
+
+            //mudar depois
+            services.Configure<DBConnectionFactory>(services => Configuration.Bind("MongoDBConnections", services));
+            Dictionary<string, DBParameterModel> cf = new();
+            Configuration.Bind("MongoDBConnections", cf);
+            services.AddSingleton(services => new DBConnectionFactory() { Clusts = cf });
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SMSolution.API", Version = "v1" });
