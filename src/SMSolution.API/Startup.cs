@@ -1,18 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SMSolution.Adapters.MongoDB.ConnectionFactory;
 using SMSolution.Adapters.MongoDB.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SMSolution.API
 {
@@ -32,7 +26,7 @@ namespace SMSolution.API
             services.AddControllers();
 
             //mudar depois
-            services.Configure<DBConnectionFactory>(services => Configuration.Bind("MongoDBConnections", services));
+            services.Configure<IDBConnectionFactory>(services => Configuration.Bind("MongoDBConnections", services));
             Dictionary<string, DBParameterModel> cf = new();
             Configuration.Bind("MongoDBConnections", cf);
             services.AddSingleton(services => new DBConnectionFactory() { Clusts = cf });

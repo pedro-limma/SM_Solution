@@ -13,10 +13,10 @@ namespace SMSolution.Domain.Application.Interfaces
         */
 
         dynamic Create(User usr);
-        dynamic Index();
-        dynamic IndexByCPF(User usr);
-        dynamic Update(User usr);
-        dynamic Delete(User usr);
+        //dynamic Index();
+        //dynamic IndexByCPF(User usr);
+        //dynamic Update(User usr);
+        //dynamic Delete(User usr);
 
     }
 }

@@ -9,19 +9,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Adapters", "3 - Adapters", "{C877007A-F497-4F54-A4F0-85F293452B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.API", "src\SMSolution.API\SMSolution.API.csproj", "{BF901389-D523-42E3-8CF1-0EDF83263245}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMSolution.API", "src\SMSolution.API\SMSolution.API.csproj", "{BF901389-D523-42E3-8CF1-0EDF83263245}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{96F7AB32-5431-434B-918B-2489E719368C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D2DA3BA0-9027-4339-8C66-5D40CDE2B5D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.Domain.Application", "src\SMSolution.Domain.Application\SMSolution.Domain.Application.csproj", "{37BF5C32-9735-446A-B9F0-69759B393768}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMSolution.Domain.Application", "src\SMSolution.Domain.Application\SMSolution.Domain.Application.csproj", "{37BF5C32-9735-446A-B9F0-69759B393768}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.Domain.Core", "src\SMSolution.Domain.Core\SMSolution.Domain.Core.csproj", "{8F1E140D-8E32-4EEB-A291-7E98E550C84B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMSolution.Domain.Core", "src\SMSolution.Domain.Core\SMSolution.Domain.Core.csproj", "{8F1E140D-8E32-4EEB-A291-7E98E550C84B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDBAdapter", "MongoDBAdapter", "{C36C69ED-5002-4B35-84B3-1B705EA15ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.Adapters.MongoDB", "src\SMSolution.Adapters.MongoDB\SMSolution.Adapters.MongoDB.csproj", "{768BC58B-E82D-4A43-B83B-701397752CC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMSolution.Adapters.MongoDB", "src\SMSolution.Adapters.MongoDB\SMSolution.Adapters.MongoDB.csproj", "{768BC58B-E82D-4A43-B83B-701397752CC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IOCAdapter", "IOCAdapter", "{F939A73B-15D6-4484-8C1C-37522A46AF5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSolution.Adapters.IOC", "src\SMSolution.Adapters.IOC\SMSolution.Adapters.IOC.csproj", "{9FA8635C-2BEF-4996-9F29-A4A4B65850B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{768BC58B-E82D-4A43-B83B-701397752CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{768BC58B-E82D-4A43-B83B-701397752CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{768BC58B-E82D-4A43-B83B-701397752CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA8635C-2BEF-4996-9F29-A4A4B65850B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA8635C-2BEF-4996-9F29-A4A4B65850B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA8635C-2BEF-4996-9F29-A4A4B65850B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA8635C-2BEF-4996-9F29-A4A4B65850B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +65,8 @@ Global
 		{8F1E140D-8E32-4EEB-A291-7E98E550C84B} = {D2DA3BA0-9027-4339-8C66-5D40CDE2B5D5}
 		{C36C69ED-5002-4B35-84B3-1B705EA15ADE} = {C877007A-F497-4F54-A4F0-85F293452B87}
 		{768BC58B-E82D-4A43-B83B-701397752CC1} = {C36C69ED-5002-4B35-84B3-1B705EA15ADE}
+		{F939A73B-15D6-4484-8C1C-37522A46AF5C} = {C877007A-F497-4F54-A4F0-85F293452B87}
+		{9FA8635C-2BEF-4996-9F29-A4A4B65850B5} = {F939A73B-15D6-4484-8C1C-37522A46AF5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6AA024C-BCEB-445C-89C8-4D3221514725}

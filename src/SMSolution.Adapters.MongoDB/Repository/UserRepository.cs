@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SMSolution.Adapters.MongoDB.ConnectionFactory;
+using SMSolution.Domain.Core.Models;
+using MongoDB.Bson;
 
 namespace SMSolution.Adapters.MongoDB.Repository
 {
@@ -18,7 +20,25 @@ namespace SMSolution.Adapters.MongoDB.Repository
             _mongo = mongo;
         }
 
+        public dynamic Create(User usr)
+        {
+            try
+            {
+                var connection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
+                usr._id = new ObjectId();
+
+                connection.InsertOne(usr);
+
+                return usr;
+            }
+            catch (Exception ex)
+            {
+                return $"[Erro ao inserir na tabela] \n {ex.Message}";
+            }
+
+           
+        }
 
     }
 }

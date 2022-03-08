@@ -9,7 +9,9 @@
 
         public string GetConnectionString()
         {
-            return $"mongodb://{Url}/?authSource=admin";
+            //return $"mongodb://{Url}/?authSource=admin";
+            return $"mongodb+srv://{Username}:{Password}@{Database}.l1lza.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
         }
     }
 }
