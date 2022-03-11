@@ -4,6 +4,7 @@ using SMSolution.Domain.Application.Services.UserService;
 using SMSolution.Domain.Core.ViewModels.Input;
 using SMSolution.Domain.Core.ViewModels.Input.User;
 using System;
+using System.Threading.Tasks;
 
 namespace SMSolution.API.Controllers.UserController
 {
@@ -20,29 +21,53 @@ namespace SMSolution.API.Controllers.UserController
 
 
         [HttpPost("create")]
-        public IActionResult CreateUser([FromBody] CreateUserVM vm)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserVM vm)
         {
             try
             {
-                return Ok(_usrService.CreateUser(vm));
+                return Ok(await _usrService.CreateUser(vm));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            
+
         }
 
         [HttpGet("index")]
-        public IActionResult IndexUsers()
+        public async Task<IActionResult> IndexUsers()
         {
-            return Ok();
+            try
+            {
+                var result = await _usrService.IndexUsers();
+
+                if (result is null)
+                    return NotFound("Nenhum usuário foi encontrado");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet("index/{cpf:int}")]
-        public IActionResult IndexUsersByCPF()
+        [HttpGet("indexByCPF")]
+        public async Task<IActionResult> IndexUserByCPF([FromQuery]int cpf)
         {
-            return Ok();
+            try
+            {
+                var result = await _usrService.FindUserByCPF(cpf);
+
+                if (result is null)
+                    return NotFound("Nenhum usuário foi encontrado");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("edit/{cpf:int}")]

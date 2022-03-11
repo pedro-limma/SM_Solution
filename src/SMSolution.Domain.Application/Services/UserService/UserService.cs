@@ -17,7 +17,7 @@ namespace SMSolution.Domain.Application.Services.UserService
             _repo = repo;
         }
 
-        public dynamic CreateUser(CreateUserVM vm)
+        public async Task<dynamic> CreateUser(CreateUserVM vm)
         {
             var obj = new User
             {
@@ -31,7 +31,18 @@ namespace SMSolution.Domain.Application.Services.UserService
                 UpdatedAt = vm.UpdatedAt,
             };
 
-            return _repo.Create(obj);
+            return await _repo.Create(obj);
+        }
+
+
+        public async Task<dynamic> IndexUsers()
+        {
+            return await _repo.Index();
+        }
+
+        public async Task<dynamic> FindUserByCPF(int cpf)
+        {
+            return await _repo.IndexByCPF(cpf);
         }
     }
 }

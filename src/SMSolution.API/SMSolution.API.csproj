@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SMSolution.Adapters.IOC\SMSolution.Adapters.IOC.csproj" />
     <ProjectReference Include="..\SMSolution.Adapters.MongoDB\SMSolution.Adapters.MongoDB.csproj" />
     <ProjectReference Include="..\SMSolution.Domain.Core\SMSolution.Domain.Core.csproj" />
   </ItemGroup>

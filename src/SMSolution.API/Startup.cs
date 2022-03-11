@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
+using SMSolution.Adapters.IOC.DomainNativeInjector;
 using SMSolution.Adapters.MongoDB.ConnectionFactory;
 using SMSolution.Adapters.MongoDB.Models;
 using System.Collections.Generic;
@@ -19,17 +21,18 @@ namespace SMSolution.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
 
-            //mudar depois
-            services.Configure<IDBConnectionFactory>(services => Configuration.Bind("MongoDBConnections", services));
-            Dictionary<string, DBParameterModel> cf = new();
-            Configuration.Bind("MongoDBConnections", cf);
-            services.AddSingleton(services => new DBConnectionFactory() { Clusts = cf });
+            services.RegisterDomainServices(Configuration);
+
+            services.AddSingleton<IDBConnectionFactory, DBConnectionFactory>
+                (services => new DBConnectionFactory(
+                    "mongodb+srv://PLima:AdminMongo123@cluster0.q5y5w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+                    "SM_Solution"));
 
 
             services.AddSwaggerGen(c =>

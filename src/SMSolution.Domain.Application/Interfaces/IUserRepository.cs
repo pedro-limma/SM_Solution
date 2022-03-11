@@ -1,4 +1,5 @@
 ﻿using SMSolution.Domain.Core.Models;
+using System.Threading.Tasks;
 
 namespace SMSolution.Domain.Application.Interfaces
 {
@@ -12,9 +13,9 @@ namespace SMSolution.Domain.Application.Interfaces
          Delete
         */
 
-        dynamic Create(User usr);
-        //dynamic Index();
-        //dynamic IndexByCPF(User usr);
+        Task<dynamic> Create(User usr);
+        Task<dynamic> Index();
+        Task<dynamic> IndexByCPF(int cpf);
         //dynamic Update(User usr);
         //dynamic Delete(User usr);
 
