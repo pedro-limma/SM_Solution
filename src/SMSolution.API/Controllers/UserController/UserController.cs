@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SMSolution.Domain.Application.Services.UserService;
-using SMSolution.Domain.Core.ViewModels.Input;
 using SMSolution.Domain.Core.ViewModels.Input.User;
 using System;
 using System.Threading.Tasks;
@@ -53,7 +51,7 @@ namespace SMSolution.API.Controllers.UserController
         }
 
         [HttpGet("indexByCPF")]
-        public async Task<IActionResult> IndexUserByCPF([FromQuery]int cpf)
+        public async Task<IActionResult> IndexUserByCPF(string cpf)
         {
             try
             {
@@ -70,16 +68,33 @@ namespace SMSolution.API.Controllers.UserController
             }
         }
 
-        [HttpPut("edit/{cpf:int}")]
-        public IActionResult UpdateUser([FromBody] UpdateUserVM vm)
+        [HttpPut("edit/")]
+        public async Task<IActionResult> UpdateUser(
+            [FromQuery] string cpf,
+            [FromBody] UpdateUserVM vm)
         {
-            return Ok(vm);
+            try
+            {
+                return Ok(await _usrService.UpdateUserByCPF(cpf, vm));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("delete/{cpf:int}")]
-        public IActionResult DeleteUser()
+        [HttpDelete("delete/")]
+        public async Task<IActionResult> DeleteUser([FromQuery] string cpf)
         {
-            return Ok();
+            try
+            {
+                return Ok(await _usrService.DeleteUser(cpf));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
+

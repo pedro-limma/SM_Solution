@@ -17,7 +17,7 @@ namespace SMSolution.Adapters.MongoDB.ConnectionFactory
             _connectionString = connectionString;
             _databaseName = databaseName;
         }
-    
+
         public IMongoDatabase Connection(string db)
         {
             return new MongoClient(_connectionString).GetDatabase(_databaseName);

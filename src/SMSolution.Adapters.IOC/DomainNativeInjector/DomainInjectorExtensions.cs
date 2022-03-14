@@ -13,7 +13,7 @@ namespace SMSolution.Adapters.IOC.DomainNativeInjector
         {
             //UseCases
             services.AddScoped<IUserService, UserService>();
-            
+
             //repo    
             services.AddScoped<IUserRepository, UserRepository>();
 

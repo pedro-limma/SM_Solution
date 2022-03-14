@@ -1,10 +1,6 @@
 ﻿using SMSolution.Domain.Application.Interfaces;
 using SMSolution.Domain.Core.Models;
 using SMSolution.Domain.Core.ViewModels.Input.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SMSolution.Domain.Application.Services.UserService
@@ -40,9 +36,29 @@ namespace SMSolution.Domain.Application.Services.UserService
             return await _repo.Index();
         }
 
-        public async Task<dynamic> FindUserByCPF(int cpf)
+        public async Task<dynamic> FindUserByCPF(string cpf)
         {
             return await _repo.IndexByCPF(cpf);
+        }
+
+        public async Task<dynamic> UpdateUserByCPF(string cpf, UpdateUserVM usr)
+        {
+            var obj = new User
+            {
+                Name=usr.Name,
+                Email=usr.Email,
+                Role=usr.Role,
+                UpdatedAt=usr.UpdatedAt,
+                PhoneNumber=usr.PhoneNumber,
+                Password=usr.Password,
+            };
+            
+            return _repo.UpdateByCPF(cpf, obj);
+        }
+
+        public async Task<dynamic> DeleteUser(string cpf)
+        {
+            return await _repo.DeleteUser(cpf);
         }
     }
 }

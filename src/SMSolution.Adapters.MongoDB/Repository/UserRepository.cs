@@ -1,12 +1,13 @@
-﻿using SMSolution.Domain.Application.Interfaces;
-using System;
+﻿using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using SMSolution.Adapters.MongoDB.ConnectionFactory;
+using SMSolution.Domain.Application.Interfaces;
 using SMSolution.Domain.Core.Models;
-using System.Threading.Tasks;
-using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using MongoDB.Driver.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SMSolution.Adapters.MongoDB.Repository
 {
@@ -22,9 +23,9 @@ namespace SMSolution.Adapters.MongoDB.Repository
         {
             try
             {
-                var connection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+                IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
-                 connection.InsertOne(usr);
+                 await collection.InsertOneAsync(usr);
 
                 return usr;
             }
@@ -34,13 +35,22 @@ namespace SMSolution.Adapters.MongoDB.Repository
             }
         }
 
+        public async Task<dynamic> DeleteUser(string cpf)
+        {
+            IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+
+            Expression<Func<User, bool>> filter = x => x.CPF.Equals(cpf);
+
+            return await collection.DeleteOneAsync(filter);
+        }
+
         public async Task<dynamic> Index()
         {
             try
             {
-                var collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+                IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
-                var filter = Builders<User>.Filter.Empty;
+                FilterDefinition<User> filter = Builders<User>.Filter.Empty;
 
                 List<User> result = collection.Find(filter).ToList();
 
@@ -52,12 +62,36 @@ namespace SMSolution.Adapters.MongoDB.Repository
             }
         }
 
-        public async Task<dynamic> IndexByCPF(int cpf)
+        public async Task<dynamic> IndexByCPF(string cpf)
         {
-            IMongoQueryable<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users").AsQueryable();
+            IMongoCollection<User> collection =  _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
-            return (from user in collection where user.CPF == cpf.ToString() select user).FirstOrDefault();  
+            Expression<Func<User, bool>> filter = x => x.CPF.Equals(cpf);
 
+            return collection.Find(filter).FirstOrDefault();
+
+        }
+
+
+        public async Task<dynamic> UpdateByCPF(string cpf, User usr)
+        {
+            IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+
+            Expression<Func<User, bool>> filter = x => x.CPF.Equals(cpf);
+
+            User user = collection.Find(filter).FirstOrDefault();
+
+            if (user is null)
+                throw new Exception("Erro ao encontrar na base.");
+
+            user.Name = usr.Name??user.Name;
+            user.Email = usr.Email??user.Email;
+            user.PhoneNumber = usr.PhoneNumber ?? user.PhoneNumber;
+            user.Password = usr.Password ?? user.Password;
+            user.Role = usr.Role ?? user.Role;
+            user.UpdatedAt = usr.UpdatedAt;
+
+            return collection.ReplaceOne(filter, user);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace SMSolution.Domain.Application.Services.UserService
 
         Task<dynamic> IndexUsers();
 
-        Task<dynamic> FindUserByCPF(int cpf);
+        Task<dynamic> FindUserByCPF(string cpf);
+        Task<dynamic> DeleteUser(string cpf);
+        Task<dynamic> UpdateUserByCPF(string cpf, UpdateUserVM vm);
     }
 }

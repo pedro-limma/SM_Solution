@@ -4,11 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
 using SMSolution.Adapters.IOC.DomainNativeInjector;
 using SMSolution.Adapters.MongoDB.ConnectionFactory;
-using SMSolution.Adapters.MongoDB.Models;
-using System.Collections.Generic;
 
 namespace SMSolution.API
 {
