@@ -11,6 +11,7 @@ namespace SMSolution.Domain.Application.Interfaces
         Task<dynamic> IndexByCPF(string cpf);
         Task<dynamic> UpdateByCPF(string cpf, User usr);
         Task<dynamic> DeleteUser(string cpf);
+        Task<User> LoginUser(string email, string password);
 
     }
 }

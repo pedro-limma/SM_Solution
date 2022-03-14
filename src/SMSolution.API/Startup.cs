@@ -1,11 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SMSolution.Adapters.IOC.DomainNativeInjector;
 using SMSolution.Adapters.MongoDB.ConnectionFactory;
+using System.Text;
 
 namespace SMSolution.API
 {
@@ -16,16 +22,37 @@ namespace SMSolution.API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get;}
 
 
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
+            
+            byte[] key = Encoding.ASCII.GetBytes((Configuration["JwtSettings:secret"]));
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                    };
+                });
+
+
 
             services.RegisterDomainServices(Configuration);
-
             services.AddSingleton<IDBConnectionFactory, DBConnectionFactory>
                 (services => new DBConnectionFactory(
                     "mongodb+srv://PLima:AdminMongo123@cluster0.q5y5w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -51,6 +78,8 @@ namespace SMSolution.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

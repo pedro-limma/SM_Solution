@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SMSolution.Domain.Application.Services.UserService;
 using SMSolution.Domain.Core.ViewModels.Input.User;
 using System;
@@ -32,7 +33,9 @@ namespace SMSolution.API.Controllers.UserController
 
         }
 
+
         [HttpGet("index")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> IndexUsers()
         {
             try
@@ -40,7 +43,7 @@ namespace SMSolution.API.Controllers.UserController
                 var result = await _usrService.IndexUsers();
 
                 if (result is null)
-                    return NotFound("Nenhum usuário foi encontrado");
+                    return NotFound(new { message = "Nenhum usuário foi encontrado" });
 
                 return Ok(result);
             }
@@ -51,6 +54,7 @@ namespace SMSolution.API.Controllers.UserController
         }
 
         [HttpGet("indexByCPF")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> IndexUserByCPF(string cpf)
         {
             try
@@ -58,7 +62,7 @@ namespace SMSolution.API.Controllers.UserController
                 var result = await _usrService.FindUserByCPF(cpf);
 
                 if (result is null)
-                    return NotFound("Nenhum usuário foi encontrado");
+                    return NotFound(new { message = "Nenhum usuário foi encontrado" });
 
                 return Ok(result);
             }
@@ -69,6 +73,7 @@ namespace SMSolution.API.Controllers.UserController
         }
 
         [HttpPut("edit/")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUser(
             [FromQuery] string cpf,
             [FromBody] UpdateUserVM vm)
@@ -84,6 +89,7 @@ namespace SMSolution.API.Controllers.UserController
         }
 
         [HttpDelete("delete/")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser([FromQuery] string cpf)
         {
             try

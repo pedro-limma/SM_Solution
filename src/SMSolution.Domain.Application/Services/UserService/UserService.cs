@@ -1,6 +1,7 @@
 ﻿using SMSolution.Domain.Application.Interfaces;
 using SMSolution.Domain.Core.Models;
 using SMSolution.Domain.Core.ViewModels.Input.User;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace SMSolution.Domain.Application.Services.UserService
@@ -11,18 +12,19 @@ namespace SMSolution.Domain.Application.Services.UserService
         public UserService(IUserRepository repo)
         {
             _repo = repo;
+
         }
 
         public async Task<dynamic> CreateUser(CreateUserVM vm)
         {
-            var obj = new User
+            User obj = new () 
             {
                 Name = vm.Name,
                 Email = vm.Email,
                 CPF = vm.CPF,
                 PhoneNumber = vm.PhoneNumber,
                 Role = vm.Role,
-                Password = vm.Password,
+                Password = new Crypt(SHA512.Create()).HashPassword(vm.Password),
                 CreatedAt = vm.CreatedAt,
                 UpdatedAt = vm.UpdatedAt,
             };
@@ -43,7 +45,7 @@ namespace SMSolution.Domain.Application.Services.UserService
 
         public async Task<dynamic> UpdateUserByCPF(string cpf, UpdateUserVM usr)
         {
-            var obj = new User
+            User obj = new ()
             {
                 Name=usr.Name,
                 Email=usr.Email,
@@ -53,12 +55,17 @@ namespace SMSolution.Domain.Application.Services.UserService
                 Password=usr.Password,
             };
             
-            return _repo.UpdateByCPF(cpf, obj);
+            return await _repo.UpdateByCPF(cpf, obj);
         }
 
         public async Task<dynamic> DeleteUser(string cpf)
         {
             return await _repo.DeleteUser(cpf);
+        }
+
+        public async Task<User> Login(string email, string password)
+        {
+            return await _repo.LoginUser(email, password);
         }
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace SMSolution.Adapters.MongoDB.Repository
@@ -14,6 +15,7 @@ namespace SMSolution.Adapters.MongoDB.Repository
     public class UserRepository : IUserRepository
     {
         private readonly IDBConnectionFactory _mongo;
+
         public UserRepository(IDBConnectionFactory mongo)
         {
             _mongo = mongo;
@@ -72,7 +74,6 @@ namespace SMSolution.Adapters.MongoDB.Repository
 
         }
 
-
         public async Task<dynamic> UpdateByCPF(string cpf, User usr)
         {
             IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
@@ -92,6 +93,18 @@ namespace SMSolution.Adapters.MongoDB.Repository
             user.UpdatedAt = usr.UpdatedAt;
 
             return collection.ReplaceOne(filter, user);
+        }
+
+        public async Task<User> LoginUser(string email, string password)
+        {
+            IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+            
+            password = new Crypt(SHA512.Create()).HashPassword(password);
+
+            Expression<Func<User, bool>> filter = x => x.Email == email && x.Password == password;
+
+            return await collection.Find(filter).FirstOrDefaultAsync();
+
         }
     }
 }
