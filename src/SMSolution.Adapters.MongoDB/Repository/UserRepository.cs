@@ -21,50 +21,42 @@ namespace SMSolution.Adapters.MongoDB.Repository
             _mongo = mongo;
         }
 
-        public async Task<dynamic> Create(User usr)
+        public async Task<User> Create(User usr)
         {
-            try
-            {
-                IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+            IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
-                 await collection.InsertOneAsync(usr);
+            await collection.InsertOneAsync(usr);
 
-                return usr;
-            }
-            catch (Exception ex)
-            {
-                return $"[Erro ao inserir na tabela] \n {ex.Message}";
-            }
+            return usr;
         }
 
-        public async Task<dynamic> DeleteUser(string cpf)
+        public async Task<string> DeleteUser(string cpf)
         {
             IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
             Expression<Func<User, bool>> filter = x => x.CPF.Equals(cpf);
 
-            return await collection.DeleteOneAsync(filter);
-        }
+            await collection.DeleteOneAsync(filter);
 
-        public async Task<dynamic> Index()
+            return "Usuário deletado com sucesso";
+        }
+            
+        public async Task<IList<User>> Index()
         {
-            try
-            {
-                IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
+            IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
-                FilterDefinition<User> filter = Builders<User>.Filter.Empty;
+            FilterDefinition<User> filter = Builders<User>.Filter.Empty;
 
-                List<User> result = collection.Find(filter).ToList();
+            IList<User> result = collection.Find(filter).ToList();
 
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return $"[Erro ao buscar indices] \n {ex.Message}";
-            }
+            if (result is null)
+                throw new Exception("Erro ao encontrar indices");
+
+            return result;
+            
         }
 
-        public async Task<dynamic> IndexByCPF(string cpf)
+        public async Task<User> IndexByCPF(string cpf)
         {
             IMongoCollection<User> collection =  _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
@@ -74,7 +66,7 @@ namespace SMSolution.Adapters.MongoDB.Repository
 
         }
 
-        public async Task<dynamic> UpdateByCPF(string cpf, User usr)
+        public async Task<User> UpdateByCPF(string cpf, User usr)
         {
             IMongoCollection<User> collection = _mongo.Connection("SM_Solution").GetCollection<User>("Users");
 
@@ -92,7 +84,10 @@ namespace SMSolution.Adapters.MongoDB.Repository
             user.Role = usr.Role ?? user.Role;
             user.UpdatedAt = usr.UpdatedAt;
 
-            return collection.ReplaceOne(filter, user);
+            await collection.ReplaceOneAsync(filter, user);
+
+
+            return user;
         }
 
         public async Task<User> LoginUser(string email, string password)

@@ -1,4 +1,5 @@
 ﻿using SMSolution.Domain.Application.Interfaces;
+using SMSolution.Domain.Application.Services.Mapping;
 using SMSolution.Domain.Core.Models;
 using SMSolution.Domain.Core.ViewModels.Input.User;
 using System.Security.Cryptography;
@@ -9,25 +10,17 @@ namespace SMSolution.Domain.Application.Services.UserService
     public class UserService : IUserService
     {
         private readonly IUserRepository _repo;
-        public UserService(IUserRepository repo)
+        private readonly IMappingUser _mapping;
+        public UserService(IUserRepository repo, IMappingUser mapping)
         {
             _repo = repo;
-
+            _mapping = mapping;
         }
 
         public async Task<dynamic> CreateUser(CreateUserVM vm)
         {
-            User obj = new () 
-            {
-                Name = vm.Name,
-                Email = vm.Email,
-                CPF = vm.CPF,
-                PhoneNumber = vm.PhoneNumber,
-                Role = vm.Role,
-                Password = new Crypt(SHA512.Create()).HashPassword(vm.Password),
-                CreatedAt = vm.CreatedAt,
-                UpdatedAt = vm.UpdatedAt,
-            };
+            User obj = _mapping.MappingToInUser(vm);
+
 
             return await _repo.Create(obj);
         }
@@ -45,16 +38,15 @@ namespace SMSolution.Domain.Application.Services.UserService
 
         public async Task<dynamic> UpdateUserByCPF(string cpf, UpdateUserVM usr)
         {
-            User obj = new ()
+            User obj = new()
             {
-                Name=usr.Name,
-                Email=usr.Email,
-                Role=usr.Role,
-                UpdatedAt=usr.UpdatedAt,
-                PhoneNumber=usr.PhoneNumber,
-                Password=usr.Password,
+                Name = usr.Name,
+                Email = usr.Email,
+                Role = usr.Role,
+                UpdatedAt = usr.UpdatedAt,
+                PhoneNumber = usr.PhoneNumber,
             };
-            
+
             return await _repo.UpdateByCPF(cpf, obj);
         }
 
