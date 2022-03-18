@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SMSolution.Domain.Application.Services.AuthService;
 using SMSolution.Domain.Application.Services.UserService;
-using SMSolution.Domain.Core.Models;
 using SMSolution.Domain.Core.ViewModels.Input.Session;
+using SMSolution.Domain.Core.ViewModels.Output;
 using System.Threading.Tasks;
 
 namespace SMSolution.API.Controllers.SessionController
@@ -24,7 +24,7 @@ namespace SMSolution.API.Controllers.SessionController
         public async Task<IActionResult> Authenticate([FromBody] SessionVM vm)
         {
 
-            User user = await _userService.Login(vm.Email, vm.Password);
+            UserResponse user = await _userService.Login(vm.Email, vm.Password);
 
             if (user is null)
                 return NotFound(new { message = "Usuário não encontrado" });

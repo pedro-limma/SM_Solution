@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SMSolution.Adapters.MongoDB.Repository;
 using SMSolution.Domain.Application.Interfaces;
 using SMSolution.Domain.Application.Services.AuthService;
+using SMSolution.Domain.Application.Services.Mapping;
 using SMSolution.Domain.Application.Services.UserService;
 
 namespace SMSolution.Adapters.IOC.DomainNativeInjector
@@ -15,6 +16,7 @@ namespace SMSolution.Adapters.IOC.DomainNativeInjector
             //UseCases
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMappingUser, MappingUser>();
 
             //repo    
             services.AddScoped<IUserRepository, UserRepository>();

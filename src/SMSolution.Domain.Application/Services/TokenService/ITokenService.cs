@@ -1,10 +1,10 @@
-﻿using SMSolution.Domain.Core.Models;
+﻿using SMSolution.Domain.Core.ViewModels.Output;
 using System.Threading.Tasks;
 
 namespace SMSolution.Domain.Application.Services.AuthService
 {
     public interface ITokenService
     {
-        Task<string> GenerateToken(User usr);
+        Task<string> GenerateToken(UserResponse usr);
     }
 }

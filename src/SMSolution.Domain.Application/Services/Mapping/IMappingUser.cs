@@ -9,7 +9,7 @@ namespace SMSolution.Domain.Application.Services.Mapping
     {
         User MappingToInUser(UpdateUserVM vm);
         User MappingToInUser(CreateUserVM vm);
-        UserResponse MappingToOutUser(User vm);
+        UserResponse MappingToOut(User vm);
         IList<UserResponse> MappingToOut(IList<User> users);
     }
 }

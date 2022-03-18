@@ -35,7 +35,7 @@ namespace SMSolution.Domain.Application.Services.Mapping
             };
         }
 
-        public UserResponse MappingToOutUser(User vm)
+        public UserResponse MappingToOut(User vm)
         {
             return new UserResponse
             {

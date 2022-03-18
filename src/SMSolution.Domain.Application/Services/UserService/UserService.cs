@@ -2,6 +2,8 @@
 using SMSolution.Domain.Application.Services.Mapping;
 using SMSolution.Domain.Core.Models;
 using SMSolution.Domain.Core.ViewModels.Input.User;
+using SMSolution.Domain.Core.ViewModels.Output;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -17,47 +19,38 @@ namespace SMSolution.Domain.Application.Services.UserService
             _mapping = mapping;
         }
 
-        public async Task<dynamic> CreateUser(CreateUserVM vm)
+        public async Task<UserResponse> CreateUser(CreateUserVM vm)
         {
             User obj = _mapping.MappingToInUser(vm);
 
-
-            return await _repo.Create(obj);
+            return _mapping.MappingToOut(await _repo.Create(obj));
         }
 
-
-        public async Task<dynamic> IndexUsers()
+        public async Task<IList<UserResponse>> IndexUsers()
         {
-            return await _repo.Index();
+            return _mapping.MappingToOut(await _repo.Index());
         }
 
-        public async Task<dynamic> FindUserByCPF(string cpf)
+        public async Task<UserResponse> FindUserByCPF(string cpf)
         {
-            return await _repo.IndexByCPF(cpf);
+            return _mapping.MappingToOut(await _repo.IndexByCPF(cpf));
         }
 
-        public async Task<dynamic> UpdateUserByCPF(string cpf, UpdateUserVM usr)
+        public async Task<UserResponse> UpdateUserByCPF(string cpf, UpdateUserVM usr)
         {
-            User obj = new()
-            {
-                Name = usr.Name,
-                Email = usr.Email,
-                Role = usr.Role,
-                UpdatedAt = usr.UpdatedAt,
-                PhoneNumber = usr.PhoneNumber,
-            };
+            User obj = _mapping.MappingToInUser(usr);
 
-            return await _repo.UpdateByCPF(cpf, obj);
+            return _mapping.MappingToOut(await _repo.UpdateByCPF(cpf, obj));
         }
 
-        public async Task<dynamic> DeleteUser(string cpf)
+        public async Task<string> DeleteUser(string cpf)
         {
             return await _repo.DeleteUser(cpf);
         }
 
-        public async Task<User> Login(string email, string password)
+        public async Task<UserResponse> Login(string email, string password)
         {
-            return await _repo.LoginUser(email, password);
+            return _mapping.MappingToOut(await _repo.LoginUser(email, password));
         }
     }
 }

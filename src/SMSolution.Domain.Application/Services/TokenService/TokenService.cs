@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SMSolution.Domain.Core.Models;
+using SMSolution.Domain.Core.ViewModels.Output;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,11 +12,11 @@ namespace SMSolution.Domain.Application.Services.AuthService
     public class TokenService : ITokenService
     {
 
-        public async Task<string> GenerateToken(User usr)
+        public async Task<string> GenerateToken(UserResponse usr)
         {
             JwtSecurityTokenHandler tokenHandler = new();
             //Buscar do app settings
-            var key = Encoding.ASCII.GetBytes("43e4dbf0-52ed-4203-895d-42b586496bd4");
+            byte[] key = Encoding.ASCII.GetBytes("43e4dbf0-52ed-4203-895d-42b586496bd4");
 
             SecurityTokenDescriptor tokenDescriptor = new()
             {
